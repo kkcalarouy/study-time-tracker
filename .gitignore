@@ -1,0 +1,19 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.env
+
+# Local study data
+*.jsonl
+*.active.json
+
+# Generated reports and exports
+reports/
+*.csv
+
+# Editor and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
