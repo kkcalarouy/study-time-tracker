@@ -1,4 +1,4 @@
 interface:
-  display_name: "Study Time Tracker"
-  short_description: "Track real study sessions and generate evidence-based reports"
-  default_prompt: "Use $study-time-tracker to start or stop a study timer, add a completed session, and generate a daily or weekly study report."
+  display_name: "Study and Deep Learning Tracker"
+  short_description: "Track study time, infer Agent-learning conversations, and detect deep focus"
+  default_prompt: "Use $study-time-tracker to track learning conversations, timer sessions, deep-focus turns, and weekly study or Agent-learning reports."

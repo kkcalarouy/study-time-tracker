@@ -7,6 +7,8 @@ if ($env:STUDY_TRACKER_PYTHON) {
     $pythonCandidates += $env:STUDY_TRACKER_PYTHON
 }
 
+$pythonCandidates += Join-Path $env:USERPROFILE ".cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe"
+
 $pythonCommand = Get-Command python -ErrorAction SilentlyContinue
 if ($pythonCommand) {
     $pythonCandidates += $pythonCommand.Source
@@ -16,8 +18,6 @@ $pyCommand = Get-Command py -ErrorAction SilentlyContinue
 if ($pyCommand) {
     $pythonCandidates += $pyCommand.Source
 }
-
-$pythonCandidates += Join-Path $env:USERPROFILE ".cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe"
 
 $python = $pythonCandidates |
     Where-Object { $_ -and (Test-Path -LiteralPath $_) } |

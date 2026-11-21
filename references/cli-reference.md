@@ -88,6 +88,57 @@ python scripts/study_tracker.py export --period month --output study-sessions.cs
 The CSV includes session ID, course, start and end timestamps, actual minutes,
 planned minutes, source, and note.
 
+## Agent Conversation Tracking
+
+Codex performs the semantic decision. `conversation_tracker.py` records the
+timing and deep-focus evidence.
+
+### Observe A Learning Turn
+
+```text
+python scripts/conversation_tracker.py observe --learning yes --topic-key "sql:indexes" --topic-label "SQL indexes"
+```
+
+Use the same `--topic-key` for follow-up turns on the same problem. Three
+related turns mark the topic as deep learning. Use a different key for an
+unrelated subject.
+
+### Record A Non-Learning Turn
+
+```text
+python scripts/conversation_tracker.py observe --learning no
+```
+
+This closes the active conversation at its last learning activity.
+
+### Update Activity Before Responding
+
+```text
+python scripts/conversation_tracker.py touch
+```
+
+If the gap from the previous activity exceeds 10 minutes, the previous session
+is finalized at that previous activity timestamp before any new session state
+is created.
+
+### Inspect And Finalize
+
+```text
+python scripts/conversation_tracker.py status
+python scripts/conversation_tracker.py finalize
+python scripts/conversation_tracker.py idle-check
+```
+
+### Conversation Report
+
+```text
+python scripts/conversation_tracker.py report --period week
+python scripts/conversation_tracker.py report --period month --output agent-learning.md
+```
+
+The report includes inferred learning duration, session count, learning turns,
+deep sessions, deep time, deep-session ratio, and topic-level focus.
+
 ## Data Schema
 
 Each JSONL line contains:
@@ -106,4 +157,7 @@ Each JSONL line contains:
 ```
 
 `source` is `timer` for the built-in timer and `manual` for backfilled records.
+Conversation records use `"source": "conversation"` and add a `conversation`
+object containing topic metadata, turn counts, deep-focus flags, and the
+close reason. Full conversation text is not stored.
 All writes are local. Invalid JSONL records are reported with a line number.
